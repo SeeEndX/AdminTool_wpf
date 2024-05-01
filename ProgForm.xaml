@@ -1,0 +1,24 @@
+﻿<Window x:Class="AdminTool_wpf.ProgForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminTool_wpf"
+        mc:Ignorable="d"
+        Title="ProgForm" Height="450" Width="800">
+    <Grid Background="#FF3C346A">
+        <Rectangle HorizontalAlignment="Left" Height="375" Margin="105,59,0,0" VerticalAlignment="Top" Width="695" Fill="#FF272438"/>
+        <Rectangle HorizontalAlignment="Left" Height="60" Margin="0,58,0,0" VerticalAlignment="Top" Width="80" Fill="#FF7A47E9"/>
+        <Rectangle HorizontalAlignment="Left" Height="60" Margin="0,123,0,0" VerticalAlignment="Top" Width="80" Fill="#FF7A47E9"/>
+        <Rectangle HorizontalAlignment="Left" Height="60" VerticalAlignment="Center" Width="80" Fill="#FF7A47E9"/>
+        <Rectangle HorizontalAlignment="Left" Height="40" Margin="0,394,0,0" VerticalAlignment="Top" Width="65" Fill="#FF7A47E9"/>
+        <Rectangle HorizontalAlignment="Left" Height="59" Margin="660,0,0,0" VerticalAlignment="Top" Width="140" Fill="#FF7A47E9"/>
+        <Label
+        Margin="17,76,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="Arial Black" Foreground="White" Content="Сайты"/>
+        <Label Content="Управление" HorizontalAlignment="Left" Margin="1,68,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Cascadia Mono ExtraLight" Width="80"/>
+        <Label Content="сайтами" HorizontalAlignment="Left" Margin="11,76,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Cascadia Mono ExtraLight"/>
+        <Label Content="Пулы" HorizontalAlignment="Left" Margin="21,141,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Cascadia Mono ExtraLight"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="0,194,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Cascadia Mono ExtraLight"/>
+        <Label Content="Сервер" HorizontalAlignment="Left" Margin="11,0,0,0" VerticalAlignment="Center" Foreground="White" FontFamily="Cascadia Mono ExtraLight"/>
+    </Grid>
+</Window>

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminTool_wpf", "AdminTool_wpf.csproj", "{7BF32A1E-0E8A-482B-B9D7-A817D4A25101}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminService", "..\AdminService\AdminService\AdminService.csproj", "{42FB9205-7DF5-4181-BDC0-D7FF878FCADE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7BF32A1E-0E8A-482B-B9D7-A817D4A25101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BF32A1E-0E8A-482B-B9D7-A817D4A25101}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BF32A1E-0E8A-482B-B9D7-A817D4A25101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FB9205-7DF5-4181-BDC0-D7FF878FCADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FB9205-7DF5-4181-BDC0-D7FF878FCADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FB9205-7DF5-4181-BDC0-D7FF878FCADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FB9205-7DF5-4181-BDC0-D7FF878FCADE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

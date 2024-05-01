@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AdminTool_wpf
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AdminForm.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AdminForm : Window
     {
-        public MainWindow()
+        public AdminForm()
         {
             InitializeComponent();
         }
