@@ -5,8 +5,8 @@
     Title="Авторизация"
     Width="300"
     Height="400"
-    Background="#FF2A0754"
-    Foreground="Black"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
@@ -114,10 +114,16 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#6a6a7a" />
+                    <Setter TargetName="border" Property="Background" Value="#363645" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#363645" />
+                    <Setter TargetName="border" Property="RenderTransformOrigin" Value="0.5,0.5" />
+                    <Setter TargetName="border" Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="border" Property="Background" Value="#525269" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -129,53 +135,96 @@
             <Setter Property="CornerRadius" Value="10" />
         </Style>
 
+        <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="39" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="{StaticResource Raleway}" />
+            <Setter Property="Foreground" Value="#9F9797" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border
+                            x:Name="border"
+                            Background="#262729"
+                            BorderThickness="0"
+                            CornerRadius="15">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Foreground="#9F9797" />
+                                <TextBlock
+                                    x:Name="PlaceholderTextBlock"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    IsHitTestVisible="False"
+                                    Text="{TemplateBinding Tag}"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#333435" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
+    <Border Background="#3F4041" CornerRadius="10">
+        <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                MouseDown="Drag"
+                Style="{StaticResource TopBorderStyle}">
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Admintool"
+                    FontFamily="{StaticResource RubikMonoOneFont}"
+                    FontSize="16"
+                    Foreground="White" />
+            </Border>
+            <Button Click="minimizeButton_Click" Template="{StaticResource MinimizeButtonTemplate}" />
+            <Button
+                x:Name="btnClose"
+                Click="btnClose_Click"
+                Template="{StaticResource CloseButtonTemplate}" />
 
-
-    <Grid Background="#3F4041">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Border
-            Grid.Row="0"
-            MouseDown="Drag"
-            Style="{StaticResource TopBorderStyle}">
-            <Label
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Admintool"
-                FontFamily="{StaticResource RubikMonoOneFont}"
-                FontSize="16"
-                Foreground="White" />
-        </Border>
-        <Button Template="{StaticResource MinimizeButtonTemplate}" />
-        <Button
-            x:Name="btnClose"
-            Click="BtnClose_Click"
-            Template="{StaticResource CloseButtonTemplate}" />
-
-        <Border
-            Grid.Row="1"
-            Margin="3,2,3,4"
-            Background="#1D1E1F"
-            CornerRadius="10" />
-        <Grid Grid.Row="1">
-            <TextBox
-                Width="180"
-                Height="30"
-                Margin="0,0,0,170"
-                FontSize="18"
-                ToolTip="Логин" />
-            <TextBox
-                Width="180"
-                Height="30"
-                Margin="0,0,0,30"
-                ToolTip="Пароль" />
-            <Button Template="{StaticResource RegularButtonTemplate}" />
+            <Border
+                Grid.Row="1"
+                Margin="3,2,3,4"
+                Background="#1D1E1F"
+                CornerRadius="10" />
+            <Grid Grid.Row="1">
+                <TextBox
+                    x:Name="tbLogin"
+                    Margin="0,0,0,170"
+                    Style="{StaticResource RoundedTextBoxStyle}"
+                    Tag="Логин"
+                    ToolTip="Введите логин" />
+                <TextBox
+                    x:Name="tbPass"
+                    Margin="0,0,0,30"
+                    Style="{StaticResource RoundedTextBoxStyle}"
+                    Tag="Пароль"
+                    ToolTip="Введите пароль" />
+                <Button Click="btnLogin_Click" Template="{StaticResource RegularButtonTemplate}" />
+            </Grid>
         </Grid>
+    </Border>
 
-    </Grid>
 </Window>

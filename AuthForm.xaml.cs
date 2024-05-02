@@ -9,9 +9,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace AdminTool_wpf
 {
@@ -34,12 +36,23 @@ namespace AdminTool_wpf
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            var login = tbLogin.Text;
+            var password = tbPass.Text;
+            MessageBox.Show($"Вход выполнен! {login} {password}");
+            
             // Код для обработки нажатия кнопки "Войти"
         }
 
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        private void minimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.3));
+            anim.Completed += (s, _) => this.Close();
+            this.BeginAnimation(OpacityProperty, anim);
         }
     }
 }
