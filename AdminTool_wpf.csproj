@@ -137,6 +137,13 @@
       <Name>AdminService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\adduser.png" />
+    <Resource Include="Resources\images\deleteuser.png" />
+    <Resource Include="Resources\images\edituser.png" />
+    <Resource Include="Resources\images\exit.png" />
+    <Resource Include="Resources\images\viewreport.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
