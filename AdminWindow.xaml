@@ -56,45 +56,48 @@
                 </Grid.RowDefinitions>
                 <Border
                     Grid.Row="0"
-                    Margin="20,20,20,0"
-                    Background="#262729"
+                    Margin="10,10,10,0"
+                    Background="Transparent"
                     CornerRadius="30">
                     <DataGrid
                         x:Name="dgvUsers"
                         AutoGenerateColumns="False"
-                        CellStyle="{DynamicResource DataGridCellStyle1}"
-                        ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                        ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}"
                         ItemsSource="{Binding}"
-                        RowStyle="{DynamicResource DataGridRowStyle1}"
-                        Style="{DynamicResource DataGridStyle1}">
+                        PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
+                        RowStyle="{StaticResource DataGridRowStyle1}"
+                        Style="{StaticResource DataGridStyle1}">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource VerticalScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn
                                 x:Name="chbChoice"
-                                Width="Auto"
+                                Width="80"
                                 Binding="{Binding Choice}"
                                 CanUserResize="False"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridCellStyle1}"
                                 ElementStyle="{StaticResource CheckBoxStyle1}"
-                                Header="Выбор">
-                                <DataGridCheckBoxColumn.HeaderTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Style="{StaticResource CheckBoxStyle1}" />
-                                    </DataTemplate>
-                                </DataGridCheckBoxColumn.HeaderTemplate>
-                            </DataGridCheckBoxColumn>
+                                Header="Выбор" />
 
                             <DataGridTextColumn
                                 x:Name="id"
-                                Width="50"
+                                Width="60"
                                 Binding="{Binding Id}"
                                 CanUserResize="False"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridCellStyle1}"
                                 Header="ID"
                                 IsReadOnly="True" />
 
                             <DataGridTextColumn
                                 x:Name="Пользователь"
-                                Width="200"
+                                Width="150"
                                 Binding="{Binding Login}"
                                 CanUserResize="False"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridCellStyle1}"
                                 Header="Пользователь"
                                 IsReadOnly="True" />
 
@@ -103,6 +106,8 @@
                                 Width="*"
                                 Binding="{Binding Functions}"
                                 CanUserResize="False"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridCellStyle1}"
                                 Header="Доступные функции"
                                 IsReadOnly="True" />
                         </DataGrid.Columns>
@@ -137,6 +142,7 @@
                     <Button
                         Grid.Row="1"
                         Grid.Column="2"
+                        Click="DeleteData"
                         Content="Удалить"
                         Template="{StaticResource RegularButtonTemplate}">
                         <Button.Tag>

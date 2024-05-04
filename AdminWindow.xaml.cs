@@ -32,6 +32,24 @@ namespace AdminTool_wpf
             GetData();
         }
 
+        public void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+            if (row != null && !row.IsEditing)
+            {
+                // Если строка уже выделена, снимаем выделение
+                if (row.IsSelected)
+                {
+                    row.IsSelected = false;
+                }
+                else
+                {
+                    // Выделяем строку
+                    row.IsSelected = true;
+                }
+            }
+        }
+
         private void AdminWindow_Closed(object sender, EventArgs e)
         {
             if (Tag is Window authWindow)
@@ -83,7 +101,6 @@ namespace AdminTool_wpf
             try
             {
                 dgvUsers.ItemsSource = serviceClient.GetUserData();
-                dataGridSetup();
             }
             catch (Exception ex)
             {
@@ -91,14 +108,12 @@ namespace AdminTool_wpf
             }
         }
 
-        private void dataGridSetup()
+        private void DeleteData(object sender, EventArgs e)
         {
-            /*dgvUsers.Columns[0]. = true;
-            dgvUsers.Columns["Доступные функции"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgvUsers.Columns["id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgvUsers.Columns["id"].Frozen = true;
-            dgvUsers.Columns["Доступные функции"].Frozen = true;
-            dgvUsers.Columns["Пользователь"].Frozen = true;*/
+            foreach (User item in dgvUsers.SelectedItems)
+            {
+                MessageBox.Show(item.Login);
+            }
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
