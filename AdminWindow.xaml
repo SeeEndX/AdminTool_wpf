@@ -16,104 +16,153 @@
     <Window.Resources>
         <!--  ШАБЛОНЫ  -->
 
-
     </Window.Resources>
 
     <!--  РАЗМЕТКА  -->
-    <Grid>
-        <Border Background="#3F4041" CornerRadius="10">
-            <Grid Background="Transparent">
+    <Border Background="#3F4041" CornerRadius="10">
+        <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                MouseDown="Drag"
+                MouseLeftButtonDown="Maximize"
+                Style="{StaticResource TopBorderStyle}">
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Admintool"
+                    FontFamily="{StaticResource RubikMonoOneFont}"
+                    FontSize="16"
+                    Foreground="White" />
+            </Border>
+            <Button Click="minimizeButton_Click" Template="{StaticResource MinimizeButtonTemplate}" />
+            <Button
+                x:Name="btnClose"
+                Click="btnClose_Click"
+                Template="{StaticResource CloseButtonTemplate}" />
+
+            <Border
+                Grid.Row="1"
+                Margin="3,2,3,4"
+                Background="#1D1E1F"
+                CornerRadius="10" />
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="330" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border
                     Grid.Row="0"
-                    MouseDown="Drag"
-                    Style="{StaticResource TopBorderStyle}">
-                    <Label
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Content="Admintool"
-                        FontFamily="{StaticResource RubikMonoOneFont}"
-                        FontSize="16"
-                        Foreground="White" />
-                </Border>
-                <Button Click="minimizeButton_Click" Template="{StaticResource MinimizeButtonTemplate}" />
-                <Button
-                    x:Name="btnClose"
-                    Click="btnClose_Click"
-                    Template="{StaticResource CloseButtonTemplate}" />
-
-                <Border
-                    Grid.Row="1"
-                    Margin="3,2,3,4"
-                    Background="#1D1E1F"
-                    CornerRadius="10" />
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="330" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                    Margin="20,20,20,0"
+                    Background="#262729"
+                    CornerRadius="30">
                     <DataGrid
-                        Grid.Row="0"
-                        Margin="20,20,20,0"
-                        Background="#262729" />
-                    <Grid Grid.Row="1" Margin="20,20,20,15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="80" />
-                        </Grid.ColumnDefinitions>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Content="Добавить"
-                            Template="{StaticResource RegularButtonTemplate}">
-                            <Button.Tag>
-                                <BitmapImage UriSource="/Resources/images/adduser.png" />
-                            </Button.Tag>
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Content="Изменить"
-                            Template="{StaticResource RegularButtonTemplate}">
-                            <Button.Tag>
-                                <BitmapImage UriSource="/Resources/images/edituser.png" />
-                            </Button.Tag>
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Content="Удалить"
-                            Template="{StaticResource RegularButtonTemplate}">
-                            <Button.Tag>
-                                <BitmapImage UriSource="/Resources/images/deleteuser.png" />
-                            </Button.Tag>
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="3"
-                            Content="Отчет"
-                            Template="{StaticResource RegularButtonTemplate}">
-                            <Button.Tag>
-                                <BitmapImage UriSource="/Resources/images/viewreport.png" />
-                            </Button.Tag>
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="4"
-                            Template="{StaticResource ExitButtonTemplate}">
-                            <Button.Tag>
-                                <BitmapImage UriSource="/Resources/images/exit.png" />
-                            </Button.Tag>
-                        </Button>
-                    </Grid>
+                        x:Name="dgvUsers"
+                        AutoGenerateColumns="False"
+                        CellStyle="{DynamicResource DataGridCellStyle1}"
+                        ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                        ItemsSource="{Binding}"
+                        RowStyle="{DynamicResource DataGridRowStyle1}"
+                        Style="{DynamicResource DataGridStyle1}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn
+                                x:Name="chbChoice"
+                                Width="Auto"
+                                Binding="{Binding Choice}"
+                                CanUserResize="False"
+                                ElementStyle="{StaticResource CheckBoxStyle1}"
+                                Header="Выбор">
+                                <DataGridCheckBoxColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource CheckBoxStyle1}" />
+                                    </DataTemplate>
+                                </DataGridCheckBoxColumn.HeaderTemplate>
+                            </DataGridCheckBoxColumn>
+
+                            <DataGridTextColumn
+                                x:Name="id"
+                                Width="50"
+                                Binding="{Binding Id}"
+                                CanUserResize="False"
+                                Header="ID"
+                                IsReadOnly="True" />
+
+                            <DataGridTextColumn
+                                x:Name="Пользователь"
+                                Width="200"
+                                Binding="{Binding Login}"
+                                CanUserResize="False"
+                                Header="Пользователь"
+                                IsReadOnly="True" />
+
+                            <DataGridTextColumn
+                                x:Name="Доступные_функции"
+                                Width="*"
+                                Binding="{Binding Functions}"
+                                CanUserResize="False"
+                                Header="Доступные функции"
+                                IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Grid Grid.Row="1" Margin="20,20,20,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="Добавить"
+                        Template="{StaticResource RegularButtonTemplate}">
+                        <Button.Tag>
+                            <BitmapImage UriSource="/Resources/images/adduser.png" />
+                        </Button.Tag>
+                    </Button>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Content="Изменить"
+                        Template="{StaticResource RegularButtonTemplate}">
+                        <Button.Tag>
+                            <BitmapImage UriSource="/Resources/images/edituser.png" />
+                        </Button.Tag>
+                    </Button>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Content="Удалить"
+                        Template="{StaticResource RegularButtonTemplate}">
+                        <Button.Tag>
+                            <BitmapImage UriSource="/Resources/images/deleteuser.png" />
+                        </Button.Tag>
+                    </Button>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Content="Отчет"
+                        Template="{StaticResource RegularButtonTemplate}">
+                        <Button.Tag>
+                            <BitmapImage UriSource="/Resources/images/viewreport.png" />
+                        </Button.Tag>
+                    </Button>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Click="btnLogout_Click"
+                        Template="{StaticResource ExitButtonTemplate}">
+                        <Button.Tag>
+                            <BitmapImage UriSource="/Resources/images/exit.png" />
+                        </Button.Tag>
+                    </Button>
                 </Grid>
             </Grid>
-        </Border>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

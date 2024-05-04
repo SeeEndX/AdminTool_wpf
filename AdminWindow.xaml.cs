@@ -29,7 +29,7 @@ namespace AdminTool_wpf
             InitializeComponent();
             this.serviceClient = serviceClient;
             Closed += AdminWindow_Closed;
-            //GetData();
+            GetData();
         }
 
         private void AdminWindow_Closed(object sender, EventArgs e)
@@ -57,11 +57,32 @@ namespace AdminTool_wpf
             if (Mouse.LeftButton == MouseButtonState.Pressed) adminWindow.DragMove();
         }
 
-        /*private void GetData()
+        private bool isMaximized = false;
+        private void Maximize(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                if (isMaximized)
+                {
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 800;
+                    this.Height = 450;
+
+                    isMaximized = false;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Maximized;
+                    isMaximized = true;
+                }
+            }
+        }
+
+        private void GetData()
         {
             try
             {
-                dgvUsers.DataSource = serviceClient.GetUsersData();
+                dgvUsers.ItemsSource = serviceClient.GetUserData();
                 dataGridSetup();
             }
             catch (Exception ex)
@@ -72,28 +93,27 @@ namespace AdminTool_wpf
 
         private void dataGridSetup()
         {
-            dgvUsers.Columns["Пользователь"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            /*dgvUsers.Columns[0]. = true;
             dgvUsers.Columns["Доступные функции"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvUsers.Columns["id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvUsers.Columns["id"].Frozen = true;
             dgvUsers.Columns["Доступные функции"].Frozen = true;
-            dgvUsers.Columns["Пользователь"].Frozen = true;
+            dgvUsers.Columns["Пользователь"].Frozen = true;*/
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            AuthForm auth = new AuthForm();
-            auth.Tag = this;
-            auth.Show(this);
-            Hide();
+            var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.3));
+            anim.Completed += (s, _) => this.Close();
+            this.BeginAnimation(OpacityProperty, anim);
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        /*private void btnAdd_Click(object sender, EventArgs e)
         {
             OpenAddUserForm();
-        }
+        }*/
 
-        private void OpenAddUserForm()
+        /*private void OpenAddUserForm()
         {
             AddUserForm addUserForm = new AddUserForm(serviceClient);
             addUserForm.Tag = this;
@@ -107,14 +127,14 @@ namespace AdminTool_wpf
         {
             this.Enabled = true;
             GetData();
-        }
+        }*/
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        /*private void btnEdit_Click(object sender, EventArgs e)
         {
             OpenEditUserForm();
-        }
+        }*/
 
-        private void OpenEditUserForm()
+        /*private void OpenEditUserForm()
         {
             if (dgvUsers.SelectedCells.Count > 0)
             {
@@ -131,25 +151,24 @@ namespace AdminTool_wpf
             {
                 MessageBox.Show("Выберите пользователя для редактирования.");
             }
-        }
+        }*/
 
-        private void EditUserForm_FormClosed(object sender, FormClosedEventArgs e)
+        /*private void EditUserForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
             GetData();
-        }
+        }*/
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            bool containsCheckboxCell = false;
-
-            DialogResult result = MessageBox.Show("Вы уверены, " +
+            var result = MessageBox.Show("Вы уверены, " +
                 "что хотите удалить выбранных пользователей?",
-                "Подтверждение удаления", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+                "Подтверждение удаления", MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                foreach (DataGridViewCell cell in dgvUsers.SelectedCells)
+                //DeleteSelectedRows();
+                /*foreach (DataGridViewCell cell in dgvUsers.SelectedCells)
                 {
                     if (cell.OwningColumn.Name == "chbChoice")
                     {
@@ -159,11 +178,29 @@ namespace AdminTool_wpf
                 }
 
                 if (containsCheckboxCell) DeleteSelectedRows();
-                else DeleteSelectedCells();
+                else DeleteSelectedCells();*/
             }
         }
 
-        private void DeleteSelectedRows()
+        /*private void DeleteSelectedRows()
+        {
+            for (int i = dgvUsers.Items.Count - 1; i >= 0; i--)
+            {
+                var row = (DataGridRow)dgvUsers.ItemContainerGenerator.ContainerFromIndex(i);
+                var checkbox = dgvUsers.Columns["chbChoice"].GetCellContent(row) as CheckBox;
+
+                if (checkbox != null && checkbox.IsChecked == true)
+                {
+                    int userId = Convert.ToInt32(((YourDataType)row.Item).Id);
+
+                    serviceClient.DeleteUser(userId);
+
+                    dgvUsers.Items.RemoveAt(i);
+                }
+            }
+        }*/
+
+        /*private void DeleteSelectedRows()
         {
             for (int i = 0; i < dgvUsers.Rows.Count; i++)
             {
@@ -180,9 +217,9 @@ namespace AdminTool_wpf
                     i--;
                 }
             }
-        }
+        }*/
 
-        private void DeleteSelectedCells()
+        /*private void DeleteSelectedCells()
         {
             if (dgvUsers.SelectedCells.Count > 0)
             {
@@ -211,14 +248,9 @@ namespace AdminTool_wpf
                     dgvUsers.EndEdit();
                 }
             }
-        }
+        }*/
 
-        private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void btnReport_Click(object sender, EventArgs e)
+        /*private void btnReport_Click(object sender, EventArgs e)
         {
             if (dgvUsers.SelectedCells.Count > 0)
             {
