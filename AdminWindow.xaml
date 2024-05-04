@@ -59,59 +59,64 @@
                     Margin="10,10,10,0"
                     Background="Transparent"
                     CornerRadius="30">
-                    <DataGrid
-                        x:Name="dgvUsers"
-                        AutoGenerateColumns="False"
-                        ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}"
-                        ItemsSource="{Binding}"
-                        PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
-                        RowStyle="{StaticResource DataGridRowStyle1}"
-                        Style="{StaticResource DataGridStyle1}">
-                        <DataGrid.Resources>
-                            <Style BasedOn="{StaticResource VerticalScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
-                        </DataGrid.Resources>
-                        <DataGrid.Columns>
-                            <DataGridCheckBoxColumn
-                                x:Name="chbChoice"
-                                Width="80"
-                                Binding="{Binding Choice}"
-                                CanUserResize="False"
-                                CanUserSort="False"
-                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                ElementStyle="{StaticResource CheckBoxStyle1}"
-                                Header="Выбор" />
+                    <DockPanel LastChildFill="True">
+                        <DataGrid
+                            x:Name="dgvUsers"
+                            Grid.Row="0"
+                            AutoGenerateColumns="False"
+                            ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}"
+                            DockPanel.Dock="Top"
+                            ItemsSource="{Binding}"
+                            PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
+                            RowStyle="{StaticResource DataGridRowStyle1}"
+                            Style="{StaticResource DataGridStyle1}">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource VerticalScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    x:Name="id"
+                                    Width="70"
+                                    Binding="{Binding Id}"
+                                    CanUserResize="False"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridCellStyle1}"
+                                    Header="ID"
+                                    IsReadOnly="True" />
 
-                            <DataGridTextColumn
-                                x:Name="id"
-                                Width="60"
-                                Binding="{Binding Id}"
-                                CanUserResize="False"
-                                CanUserSort="False"
-                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                Header="ID"
-                                IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    x:Name="Пользователь"
+                                    Width="180"
+                                    Binding="{Binding Login}"
+                                    CanUserResize="False"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridCellStyle1}"
+                                    Header="Пользователь"
+                                    IsReadOnly="True" />
 
-                            <DataGridTextColumn
-                                x:Name="Пользователь"
-                                Width="150"
-                                Binding="{Binding Login}"
-                                CanUserResize="False"
-                                CanUserSort="False"
-                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                Header="Пользователь"
-                                IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    x:Name="Доступные_функции"
+                                    Width="*"
+                                    Binding="{Binding Functions}"
+                                    CanUserResize="False"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridCellStyle1}"
+                                    Header="Доступные функции"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid
+                            Width="755"
+                            Height="20"
+                            Margin="7,2,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="Transparent">
+                            <Border Background="#777C84" CornerRadius="0 0 20 20" />
+                        </Grid>
+                    </DockPanel>
 
-                            <DataGridTextColumn
-                                x:Name="Доступные_функции"
-                                Width="*"
-                                Binding="{Binding Functions}"
-                                CanUserResize="False"
-                                CanUserSort="False"
-                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                Header="Доступные функции"
-                                IsReadOnly="True" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+
                 </Border>
                 <Grid Grid.Row="1" Margin="20,20,20,15">
                     <Grid.ColumnDefinitions>

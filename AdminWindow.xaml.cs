@@ -110,9 +110,17 @@ namespace AdminTool_wpf
 
         private void DeleteData(object sender, EventArgs e)
         {
-            foreach (User item in dgvUsers.SelectedItems)
+            var messageBox = new CustomMessageBox("Вы уверены, " +
+                "что хотите удалить выбранных пользователей?", CustomMessageBox.MessageBoxButton.OKCancel, CustomMessageBox.MessageBoxType.Warning);
+
+            bool? result = messageBox.ShowDialog();
+            if (result == true)
             {
-                MessageBox.Show(item.Login);
+                foreach (User user in dgvUsers.SelectedItems)
+                {
+                    serviceClient.DeleteUser(user.Id);
+                }
+                GetData();
             }
         }
 
@@ -126,9 +134,9 @@ namespace AdminTool_wpf
         /*private void btnAdd_Click(object sender, EventArgs e)
         {
             OpenAddUserForm();
-        }*/
+        }
 
-        /*private void OpenAddUserForm()
+        private void OpenAddUserForm()
         {
             AddUserForm addUserForm = new AddUserForm(serviceClient);
             addUserForm.Tag = this;
@@ -172,97 +180,6 @@ namespace AdminTool_wpf
         {
             this.Enabled = true;
             GetData();
-        }*/
-
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Вы уверены, " +
-                "что хотите удалить выбранных пользователей?",
-                "Подтверждение удаления", MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                //DeleteSelectedRows();
-                /*foreach (DataGridViewCell cell in dgvUsers.SelectedCells)
-                {
-                    if (cell.OwningColumn.Name == "chbChoice")
-                    {
-                        containsCheckboxCell = true;
-                        break;
-                    }
-                }
-
-                if (containsCheckboxCell) DeleteSelectedRows();
-                else DeleteSelectedCells();*/
-            }
-        }
-
-        /*private void DeleteSelectedRows()
-        {
-            for (int i = dgvUsers.Items.Count - 1; i >= 0; i--)
-            {
-                var row = (DataGridRow)dgvUsers.ItemContainerGenerator.ContainerFromIndex(i);
-                var checkbox = dgvUsers.Columns["chbChoice"].GetCellContent(row) as CheckBox;
-
-                if (checkbox != null && checkbox.IsChecked == true)
-                {
-                    int userId = Convert.ToInt32(((YourDataType)row.Item).Id);
-
-                    serviceClient.DeleteUser(userId);
-
-                    dgvUsers.Items.RemoveAt(i);
-                }
-            }
-        }*/
-
-        /*private void DeleteSelectedRows()
-        {
-            for (int i = 0; i < dgvUsers.Rows.Count; i++)
-            {
-                DataGridViewRow row = dgvUsers.Rows[i];
-                DataGridViewCheckBoxCell checkbox = row.Cells["chbChoice"] as DataGridViewCheckBoxCell;
-
-                if (Convert.ToBoolean(checkbox?.Value))
-                {
-                    int userId = Convert.ToInt32(row.Cells["id"].Value);
-
-                    serviceClient.DeleteUser(userId);
-
-                    dgvUsers.Rows.RemoveAt(i);
-                    i--;
-                }
-            }
-        }*/
-
-        /*private void DeleteSelectedCells()
-        {
-            if (dgvUsers.SelectedCells.Count > 0)
-            {
-                int rowIndex = dgvUsers.SelectedCells[0].RowIndex;
-
-                if (rowIndex >= 0 && rowIndex < dgvUsers.Rows.Count)
-                {
-                    int userId = Convert.ToInt32(dgvUsers.Rows[rowIndex].Cells["id"].Value);
-
-                    serviceClient.DeleteUser(userId);
-
-                    dgvUsers.Rows.RemoveAt(rowIndex);
-                }
-            }
-        }
-
-        private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dgvUsers.Columns["chbChoice"].Index && e.RowIndex >= 0)
-            {
-                DataGridViewCheckBoxCell checkboxCell = dgvUsers.Rows[e.RowIndex].Cells["chbChoice"] as DataGridViewCheckBoxCell;
-
-                if (checkboxCell != null)
-                {
-                    checkboxCell.Value = checkboxCell.Value == null || !(bool)checkboxCell.Value;
-                    dgvUsers.EndEdit();
-                }
-            }
         }*/
 
         /*private void btnReport_Click(object sender, EventArgs e)

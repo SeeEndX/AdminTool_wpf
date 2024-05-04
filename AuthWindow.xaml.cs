@@ -1,9 +1,11 @@
 ﻿using AdminService;
 using System;
+using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using static AdminTool_wpf.CustomMessageBox;
 
 namespace AdminTool_wpf
 {
@@ -58,7 +60,8 @@ namespace AdminTool_wpf
             }
             else
             {
-                MessageBox.Show("Неверные данные!");
+                var cmb = new CustomMessageBox("Неверные данные!",CustomMessageBox.MessageBoxButton.OK, MessageBoxType.Error);
+                cmb.ShowDialog();
             }
         }
 
@@ -70,7 +73,6 @@ namespace AdminTool_wpf
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             Auth();
-            // Код для обработки нажатия кнопки "Войти"
         }
 
         private void minimizeButton_Click(object sender, RoutedEventArgs e)
