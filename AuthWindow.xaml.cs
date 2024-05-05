@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using static AdminTool_wpf.CustomMessageBox;
 
 namespace AdminTool_wpf
@@ -61,7 +62,10 @@ namespace AdminTool_wpf
             else
             {
                 var cmb = new CustomMessageBox("Неверные данные!",CustomMessageBox.MessageBoxButton.OK, MessageBoxType.Error);
+                
+                this.Effect = new BlurEffect { Radius = 10 };
                 cmb.ShowDialog();
+                this.Effect = null;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using AdminService;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -112,15 +114,30 @@ namespace AdminTool_wpf
         {
             var messageBox = new CustomMessageBox("Вы уверены, " +
                 "что хотите удалить выбранных пользователей?", CustomMessageBox.MessageBoxButton.OKCancel, CustomMessageBox.MessageBoxType.Warning);
-
+            this.Effect = new BlurEffect { Radius = 10 };
             bool? result = messageBox.ShowDialog();
             if (result == true)
             {
-                foreach (User user in dgvUsers.SelectedItems)
+                if (dgvUsers.SelectedItems.Count>0)
                 {
-                    serviceClient.DeleteUser(user.Id);
+                    foreach (User user in dgvUsers.SelectedItems)
+                    {
+                        serviceClient.DeleteUser(user.Id);
+                    }
+                    GetData();
+                    this.Effect = null;
                 }
-                GetData();
+                else
+                {
+                    messageBox = new CustomMessageBox("Вы не выбрали пользователей для удаления ", 
+                        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                    messageBox.ShowDialog();
+                    this.Effect = null;
+                }
+            }
+            else
+            {
+                this.Effect = null;
             }
         }
 
@@ -182,24 +199,31 @@ namespace AdminTool_wpf
             GetData();
         }*/
 
-        /*private void btnReport_Click(object sender, EventArgs e)
+        private void btnReport_Click(object sender, EventArgs e)
         {
-            if (dgvUsers.SelectedCells.Count > 0)
+            if (dgvUsers.SelectedItem != null)
             {
-                int rowIndex = dgvUsers.SelectedCells[0].RowIndex;
-                int userId = Convert.ToInt32(dgvUsers.Rows[rowIndex].Cells["id"].Value);
+                User user= (User)dgvUsers.SelectedItem;
+                int userId = user.Id;
 
                 GenerateReport(userId);
             }
         }
 
+        private void ViewReportForm_Closed(object sender, EventArgs e)
+        {
+            this.Effect = null;
+        }
+
         private void GenerateReport(int userId)
         {
-            ViewReportForm viewReportForm = new ViewReportForm(serviceClient, userId);
-            viewReportForm.Tag = this;
-            viewReportForm.FormClosed += (sender, e) => this.Enabled = true;
-            viewReportForm.Show(this);
-            this.Enabled = false;
-        }*/
+            BlurEffect blurEffect = new BlurEffect();
+            blurEffect.Radius = 10;
+            this.Effect = blurEffect;
+            ViewReportWindow viewReportForm = new ViewReportWindow(serviceClient, userId);
+            viewReportForm.Owner = this;
+            viewReportForm.Closed += ViewReportForm_Closed;
+            viewReportForm.ShowDialog();
+        }
     }
 }
