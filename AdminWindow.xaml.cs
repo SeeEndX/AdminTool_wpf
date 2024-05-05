@@ -30,7 +30,6 @@ namespace AdminTool_wpf
             adminWindow = this;
             InitializeComponent();
             this.serviceClient = serviceClient;
-            Closed += AdminWindow_Closed;
             GetData();
         }
 
@@ -39,24 +38,14 @@ namespace AdminTool_wpf
             var row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
             if (row != null && !row.IsEditing)
             {
-                // Если строка уже выделена, снимаем выделение
                 if (row.IsSelected)
                 {
                     row.IsSelected = false;
                 }
                 else
                 {
-                    // Выделяем строку
                     row.IsSelected = true;
                 }
-            }
-        }
-
-        private void AdminWindow_Closed(object sender, EventArgs e)
-        {
-            if (Tag is Window authWindow)
-            {
-                authWindow.Show();
             }
         }
 
@@ -68,7 +57,7 @@ namespace AdminTool_wpf
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.3));
-            anim.Completed += (s, _) => this.Close();
+            anim.Completed += (s, _) => Application.Current.Shutdown();
             this.BeginAnimation(OpacityProperty, anim);
         }
 
@@ -144,30 +133,38 @@ namespace AdminTool_wpf
         private void btnLogout_Click(object sender, EventArgs e)
         {
             var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.3));
-            anim.Completed += (s, _) => this.Close();
+            anim.Completed += (s, _) =>
+            {
+                this.Close();
+                if (Tag is Window authWindow)
+                {
+                    authWindow.Show();
+                }
+            };
             this.BeginAnimation(OpacityProperty, anim);
         }
 
-        /*private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             OpenAddUserForm();
         }
 
         private void OpenAddUserForm()
         {
-            AddUserForm addUserForm = new AddUserForm(serviceClient);
-            addUserForm.Tag = this;
-            addUserForm.FormClosed += AddUserForm_FormClosed;
-            addUserForm.Show(this);
-
-            this.Enabled = false;
+            BlurEffect blurEffect = new BlurEffect();
+            blurEffect.Radius = 10;
+            this.Effect = blurEffect;
+            AddUserWindow addUserWin = new AddUserWindow(serviceClient);
+            addUserWin.Owner = this;
+            addUserWin.Closed += AddUserForm_FormClosed;
+            addUserWin.ShowDialog();
         }
 
-        private void AddUserForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void AddUserForm_FormClosed(object sender, EventArgs e)
         {
-            this.Enabled = true;
+            this.Effect = null;
             GetData();
-        }*/
+        }
 
         /*private void btnEdit_Click(object sender, EventArgs e)
         {

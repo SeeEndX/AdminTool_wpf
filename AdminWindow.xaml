@@ -129,8 +129,10 @@
                     <Button
                         Grid.Row="1"
                         Grid.Column="0"
+                        Click="btnAdd_Click"
                         Content="Добавить"
-                        Template="{StaticResource RegularButtonTemplate}">
+                        Template="{StaticResource RegularButtonTemplate}"
+                        ToolTip="Добавить пользователя">
                         <Button.Tag>
                             <BitmapImage UriSource="/Resources/images/adduser.png" />
                         </Button.Tag>
@@ -139,7 +141,8 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Content="Изменить"
-                        Template="{StaticResource RegularButtonTemplate}">
+                        Template="{StaticResource RegularButtonTemplate}"
+                        ToolTip="Изменить пользователя">
                         <Button.Tag>
                             <BitmapImage UriSource="/Resources/images/edituser.png" />
                         </Button.Tag>
@@ -149,7 +152,8 @@
                         Grid.Column="2"
                         Click="DeleteData"
                         Content="Удалить"
-                        Template="{StaticResource RegularButtonTemplate}">
+                        Template="{StaticResource RegularButtonTemplate}"
+                        ToolTip="Удалить пользователя">
                         <Button.Tag>
                             <BitmapImage UriSource="/Resources/images/deleteuser.png" />
                         </Button.Tag>
@@ -159,7 +163,8 @@
                         Grid.Column="3"
                         Click="btnReport_Click"
                         Content="Отчет"
-                        Template="{StaticResource RegularButtonTemplate}">
+                        Template="{StaticResource RegularButtonTemplate}"
+                        ToolTip="Посмотреть отчет о действиях пользователя">
                         <Button.Tag>
                             <BitmapImage UriSource="/Resources/images/viewreport.png" />
                         </Button.Tag>
@@ -168,7 +173,8 @@
                         Grid.Row="1"
                         Grid.Column="4"
                         Click="btnLogout_Click"
-                        Template="{StaticResource ExitButtonTemplate}">
+                        Template="{StaticResource ExitButtonTemplate}"
+                        ToolTip="Выйти">
                         <Button.Tag>
                             <BitmapImage UriSource="/Resources/images/exit.png" />
                         </Button.Tag>

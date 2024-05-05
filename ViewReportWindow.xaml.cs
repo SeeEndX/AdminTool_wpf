@@ -53,7 +53,7 @@ namespace AdminTool_wpf
             (List<string> reports, string username) = serviceClient.GetReportsForUser(user);
             if (reports.Count > 0)
             {
-                userInfoTextBlock.Text = $"Отчеты для пользователя {username}";
+                userInfoTextBlock.Text = $"Действия пользователя {username}";
                 foreach (string reportEntry in reports)
                 {
                     reportTextBlock.AppendText(reportEntry);

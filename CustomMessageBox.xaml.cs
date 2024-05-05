@@ -23,7 +23,8 @@ namespace AdminTool_wpf
         public enum MessageBoxType
         {
             Error,
-            Warning
+            Warning,
+            Success
         }
 
         public CustomMessageBox(string message, MessageBoxButton buttonType, MessageBoxType messageType)
@@ -41,6 +42,11 @@ namespace AdminTool_wpf
             {
                 titleLbl.Content = "Предупреждение";
                 titleLbl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#d6802f"));
+            }
+            else if (messageType == MessageBoxType.Success)
+            {
+                titleLbl.Content = "Успех";
+                titleLbl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6fd62f"));
             }
 
             if (buttonType == MessageBoxButton.OK)
