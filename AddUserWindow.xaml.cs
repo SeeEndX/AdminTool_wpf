@@ -25,7 +25,7 @@ namespace AdminTool_wpf
     {
         AddUserWindow addUserWin;
         IAdminService serviceClient;
-        string username = "";
+
         public ObservableCollection<FunctionItem> FunctionItems { get; set; }
 
         public AddUserWindow(IAdminService serviceClient)
@@ -66,7 +66,6 @@ namespace AdminTool_wpf
                 }
                 else if (!serviceClient.IsUserExists(newUsername) && AddUser(newUsername, newPassword))
                 {
-                    username = newUsername;
                     ShowMessageBox("Пользователь успешно добавлен", CustomMessageBox.MessageBoxType.Success);
                     return;
                 }

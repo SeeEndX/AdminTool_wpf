@@ -166,35 +166,49 @@ namespace AdminTool_wpf
             GetData();
         }
 
-        /*private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
             OpenEditUserForm();
-        }*/
+        }
 
-        /*private void OpenEditUserForm()
+        private void OpenEditUserForm()
         {
-            if (dgvUsers.SelectedCells.Count > 0)
+            if (dgvUsers.SelectedItems.Count == 1)
             {
-                int rowIndex = dgvUsers.SelectedCells[0].RowIndex;
-                string selectedUsername = dgvUsers.Rows[rowIndex].Cells["Пользователь"].Value.ToString();
+                BlurEffect blurEffect = new BlurEffect();
+                blurEffect.Radius = 10;
+                this.Effect = blurEffect;
 
-                EditUserForm editUserForm = new EditUserForm(selectedUsername, serviceClient);
-                editUserForm.Tag = this;
-                editUserForm.FormClosed += EditUserForm_FormClosed;
-                editUserForm.Show(this);
-                this.Enabled = false;
+                var user = (User)dgvUsers.SelectedItem;
+                string selectedUsername = user.Login;
+
+                string origPass = serviceClient.GetPasswordByUsername(selectedUsername);
+
+                EditUserWindow editUserForm = new EditUserWindow(selectedUsername, origPass, serviceClient);
+                editUserForm.Owner = this;
+                editUserForm.Closed += EditUserForm_FormClosed;
+                editUserForm.ShowDialog();
+
+            }
+            else if (dgvUsers.SelectedItems.Count > 1)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Выберите только ОДНОГО пользователя для редактирования",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Выберите пользователя для редактирования.");
+                CustomMessageBox cmb = new CustomMessageBox("Выберите пользователя для редактирования",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
             }
-        }*/
+        }
 
-        /*private void EditUserForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void EditUserForm_FormClosed(object sender, EventArgs e)
         {
-            this.Enabled = true;
+            this.Effect = null;
             GetData();
-        }*/
+        }
 
         private void btnReport_Click(object sender, EventArgs e)
         {

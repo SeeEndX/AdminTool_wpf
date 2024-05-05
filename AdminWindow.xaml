@@ -140,6 +140,7 @@
                     <Button
                         Grid.Row="1"
                         Grid.Column="1"
+                        Click="btnEdit_Click"
                         Content="Изменить"
                         Template="{StaticResource RegularButtonTemplate}"
                         ToolTip="Изменить пользователя">
