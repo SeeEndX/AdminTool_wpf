@@ -13,10 +13,6 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Window.Resources>
-        <!--  ШАБЛОНЫ  -->
-
-    </Window.Resources>
 
     <!--  РАЗМЕТКА  -->
     <Border Background="#3F4041" CornerRadius="10">
@@ -112,7 +108,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Background="Transparent">
-                            <Border Background="#777C84" CornerRadius="0 0 20 20" />
+                            <Border Background="#23262b" CornerRadius="0 0 20 20" />
                         </Grid>
                     </DockPanel>
 

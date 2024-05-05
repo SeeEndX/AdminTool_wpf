@@ -38,7 +38,7 @@
         </Style>
 
         <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Background" Value="#777C84" />
+            <Setter Property="Background" Value="#23262b" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Height" Value="30" />
             <Setter Property="FontSize" Value="16" />
@@ -61,7 +61,7 @@
         </Style>
 
         <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="#37393C" />
+            <Setter Property="Background" Value="#232426" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Margin" Value="7,2,0,2" />
 
@@ -98,9 +98,9 @@
                     <ControlTemplate TargetType="{x:Type ScrollBar}">
                         <Grid>
                             <Rectangle
-                                Height="275"
-                                VerticalAlignment="Top"
-                                Fill="#46474a"
+                                Height="Auto"
+                                VerticalAlignment="Stretch"
+                                Fill="#23262b"
                                 RadiusX="10"
                                 RadiusY="10" />
                             <Track
@@ -118,7 +118,7 @@
         </Style>
 
         <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
-            <Setter Property="Background" Value="#777C84" />
+            <Setter Property="Background" Value="#4e5561" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">

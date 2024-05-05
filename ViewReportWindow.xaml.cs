@@ -61,7 +61,7 @@ namespace AdminTool_wpf
             }
             else
             {
-                userInfoTextBlock.Text = $"Отчеты отсутствуют у {username}";
+                userInfoTextBlock.Text = $"{username} не выполнял действий";
                 reportTextBlock.Visibility = Visibility.Collapsed;
                 viewReportWin.Height = 100;
             }

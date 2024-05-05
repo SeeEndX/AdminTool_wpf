@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:AdminTool_wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="CustomMessageBox"
-    Width="200"
+    Width="250"
     Height="200"
     AllowsTransparency="True"
     Background="Transparent"
@@ -67,7 +67,7 @@
                     VerticalAlignment="Center"
                     Content="Предупреждение"
                     FontFamily="{StaticResource RubikMonoOneFont}"
-                    FontSize="10"
+                    FontSize="14"
                     Foreground="White" />
             </Border>
             <Button
