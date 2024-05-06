@@ -66,27 +66,6 @@ namespace AdminTool_wpf
             if (Mouse.LeftButton == MouseButtonState.Pressed) adminWindow.DragMove();
         }
 
-        private bool isMaximized = false;
-        private void Maximize(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-            {
-                if (isMaximized)
-                {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 800;
-                    this.Height = 450;
-
-                    isMaximized = false;
-                }
-                else
-                {
-                    this.WindowState = WindowState.Maximized;
-                    isMaximized = true;
-                }
-            }
-        }
-
         private void GetData()
         {
             try

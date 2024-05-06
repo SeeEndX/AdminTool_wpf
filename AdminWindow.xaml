@@ -24,7 +24,6 @@
             <Border
                 Grid.Row="0"
                 MouseDown="Drag"
-                MouseLeftButtonDown="Maximize"
                 Style="{StaticResource TopBorderStyle}">
                 <Label
                     HorizontalAlignment="Center"

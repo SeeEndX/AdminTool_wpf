@@ -53,10 +53,10 @@ namespace AdminTool_wpf
                 }
                 else if (user.Group == "Dev")
                 {
-                    /*ProgForm progForm = new ProgForm(serviceClient, user.Login);
-                    progForm.Tag = this;
-                    progForm.Show(this);
-                    Hide();*/
+                    ProgWindow progWin = new ProgWindow(serviceClient, user.Login);
+                    progWin.Tag = this;
+                    progWin.Show();
+                    Hide();
                 }
             }
             else
