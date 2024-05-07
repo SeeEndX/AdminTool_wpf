@@ -1,9 +1,7 @@
 ﻿using AdminService;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.Web.Administration;
 using System;
 using System.Collections.Generic;
-using Microsoft.Web.Administration;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,19 +21,22 @@ using System.Xml.Linq;
 namespace AdminTool_wpf
 {
     /// <summary>
-    /// Логика взаимодействия для AddIISPoolWindow.xaml
+    /// Логика взаимодействия для EditIISPoolWindow.xaml
     /// </summary>
-    public partial class AddIISPoolWindow : Window
+    public partial class EditIISPoolWindow : Window
     {
-        AddIISPoolWindow addPool;
+        EditIISPoolWindow editPool;
         IAdminService serviceClient;
         private ManagedPipelineMode mode;
+        private string currentPoolName;
 
-        public AddIISPoolWindow(IAdminService serviceClient)
+
+        public EditIISPoolWindow(IAdminService serviceClient, string currentName)
         {
             this.serviceClient = serviceClient;
             InitializeComponent();
-            addPool = this;
+            editPool = this;
+            currentPoolName = currentName;
             cbMode.SelectedItem = ManagedPipelineMode.Classic;
         }
 
@@ -46,13 +47,26 @@ namespace AdminTool_wpf
             this.Effect = blurEffect;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
             if (tbPoolName.Text == "")
             {
                 BlurEffect();
                 CustomMessageBox cmb = new CustomMessageBox("Введите название пула!",
                     CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+            else if (tbPoolName.Text == currentPoolName)
+            {
+                var memoryLimit = string.IsNullOrEmpty(tbMemLimit.Text) ? 0 : int.Parse(tbMemLimit.Text);
+                var intervalMinutes = (int.Parse(tbRestart.Text) == 0) ? 30 : int.Parse(tbRestart.Text);
+                mode = (cbMode.Text == "Классический") ? ManagedPipelineMode.Classic : ManagedPipelineMode.Integrated;
+
+                serviceClient.ModifyPool(currentPoolName, currentPoolName, mode, memoryLimit, intervalMinutes);
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
+            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
                 cmb.ShowDialog();
                 this.Effect = null;
             }
@@ -64,9 +78,9 @@ namespace AdminTool_wpf
                 var intervalMinutes = (int.Parse(tbRestart.Text) == 0) ? 30 : int.Parse(tbRestart.Text);
                 mode = (cbMode.Text == "Классический") ? ManagedPipelineMode.Classic : ManagedPipelineMode.Integrated;
 
-                serviceClient.CreatePool(poolName, mode, memoryLimit, intervalMinutes);
+                serviceClient.ModifyPool(currentPoolName ,poolName, mode, memoryLimit, intervalMinutes);
                 BlurEffect();
-                CustomMessageBox cmb = new CustomMessageBox("Пул был создан!",
+                CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
             CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
                 cmb.ShowDialog();
                 this.Effect = null;
@@ -82,7 +96,7 @@ namespace AdminTool_wpf
 
         private void Drag(object sender, RoutedEventArgs e)
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed) addPool.DragMove();
+            if (Mouse.LeftButton == MouseButtonState.Pressed) editPool.DragMove();
         }
 
         private void btnBack_Click(object sender, EventArgs e)

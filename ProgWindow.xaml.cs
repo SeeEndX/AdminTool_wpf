@@ -348,5 +348,172 @@ namespace AdminTool_wpf
             addIISWebSite.Closed += AddSiteWin_FormClosed;
             addIISWebSite.ShowDialog();
         }
+
+        private void btnEditPool_Click(object sender, EventArgs e)
+        {
+            ShowEditingIISPool();
+        }
+
+        private void ShowEditingIISPool()
+        {
+            if (dgvPools.SelectedItems.Count == 1)
+            {
+                BlurEffect();
+                var pool = (IISManager.AppPoolInfo)dgvPools.SelectedItem;
+                EditIISPoolWindow editPoolWin = new EditIISPoolWindow(serviceClient, pool.Name);
+                editPoolWin.Owner = this;
+                editPoolWin.Closed += EditPoolWin_FormClosed;
+                editPoolWin.ShowDialog();
+            }
+            else if (dgvSites.SelectedItems.Count > 1)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Выберите только ОДИН пул для редактирования",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+            else
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Выберите пул для редактирования",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+        }
+
+        private void EditPoolWin_FormClosed(object sender, EventArgs e)
+        {
+            this.Effect = null;
+            UpdatePoolsDG();
+        }
+
+        private void btnDeletePool_Click(object sender, EventArgs e)
+        {
+            BlurEffect();
+            if (dgvPools.SelectedItems.Count == 1)
+            {
+                foreach (var item in dgvPools.SelectedItems)
+                {
+                    var pool = item as IISManager.AppPoolInfo;
+                    CustomMessageBox cmb = new CustomMessageBox($"Вы уверены, что хотите удалить пул {pool.Name}?",
+                CustomMessageBox.MessageBoxButton.OKCancel, CustomMessageBox.MessageBoxType.Warning);
+                    var result = cmb.ShowDialog();
+                    this.Effect = null;
+                    if (result == true)
+                    {
+                        serviceClient.DeletePool(pool.Name);
+                        serviceClient.AddReport(currentUser, $"С веб-сервера Microsoft IIS был удален пул {pool.Name}");
+                    }
+                }
+                UpdatePoolsDG();
+
+            }
+            else if (dgvSites.SelectedItems.Count > 1)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Вы уверены, что хотите удалить пулы?",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                var result = cmb.ShowDialog();
+                this.Effect = null;
+                if (result == true)
+                {
+                    foreach (var item in dgvPools.SelectedItems)
+                    {
+                        var pool = item as IISManager.AppPoolInfo;
+
+                        serviceClient.DeletePool(pool.Name);
+                        serviceClient.AddReport(currentUser, $"С веб-сервера Microsoft IIS был удален пул {pool.Name}");
+                    }
+                    UpdatePoolsDG();
+                }
+            }
+            else
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Выберите пул для удаления",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+        }
+
+        private void btnStartPool_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvPools.SelectedItems.Count > 0)
+                {
+                    foreach (var item in dgvPools.SelectedItems)
+                    {
+                        var pool = item as IISManager.AppPoolInfo;
+                        if (pool.State == "Stopped")
+                        {
+                            serviceClient.StartAppPool(pool.Name);
+                            serviceClient.AddReport(currentUser, $"На веб-сервере Microsoft IIS был запущен пул {pool.Name}");
+                        }
+                        else
+                        {
+                            BlurEffect();
+                            CustomMessageBox cmb = new CustomMessageBox("Пул уже запущен или в процессе запуска",
+                        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                            cmb.ShowDialog();
+                            this.Effect = null;
+                            serviceClient.AddReport(currentUser, $"На веб-сервере Microsoft IIS была осуществленна попытка запустить пул {pool.Name}, который уже запущен");
+                        }
+                    }
+                    UpdatePoolsDG();
+                }
+                else
+                {
+                    BlurEffect();
+                    CustomMessageBox cmb = new CustomMessageBox("Выберите пул для запуска",
+                CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                    cmb.ShowDialog();
+                    this.Effect = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox(ex.ToString(),
+            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+
+        }
+
+        private void btnStopPool_Click(object sender, EventArgs e)
+        {
+            if (dgvPools.SelectedItems.Count > 0)
+            {
+                foreach (var item in dgvPools.SelectedItems)
+                {
+                    var pool = item as IISManager.AppPoolInfo;
+                    if (pool.State == "Started")
+                    {
+                        serviceClient.StopAppPool(pool.Name);
+                        serviceClient.AddReport(currentUser, $"На веб-сервере Microsoft IIS был остановлен пул {pool.Name}");
+                    }
+                    else
+                    {
+                        BlurEffect();
+                        CustomMessageBox cmb = new CustomMessageBox("Пул уже остановлен или в процессе остановки",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                        cmb.ShowDialog();
+                        this.Effect = null;
+                        serviceClient.AddReport(currentUser, $"На веб-сервере Microsoft IIS была осуществленна попытка остановить сайт {pool.Name}, который уже остановлен");
+                    }
+                }
+
+                UpdatePoolsDG();
+            }
+            else
+            {
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox("Выберите пул для остановки",
+            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+        }
     }
 }

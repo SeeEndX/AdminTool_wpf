@@ -246,6 +246,9 @@
     <Compile Include="AddUserWindow.xaml.cs">
       <DependentUpon>AddUserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditIISPoolWindow.xaml.cs">
+      <DependentUpon>EditIISPoolWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditSiteWindow.xaml.cs">
       <DependentUpon>EditSiteWindow.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditIISPoolWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

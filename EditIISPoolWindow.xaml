@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="AdminTool_wpf.AddIISPoolWindow"
+    x:Class="AdminTool_wpf.EditIISPoolWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -302,17 +302,17 @@
                     <Button
                         Grid.Column="0"
                         Background="#525269"
-                        Click="btnAdd_Click"
-                        Content="Создать"
+                        Click="btnEdit_Click"
+                        Content="Изменить"
                         Template="{StaticResource ButtonTemplate}"
-                        ToolTip="Добавить новый пул" />
+                        ToolTip="Изменить существующий пул" />
                     <Button
                         Grid.Column="1"
                         Background="#404047"
                         Click="btnBack_Click"
                         Content="Назад"
                         Template="{StaticResource ButtonTemplate}"
-                        ToolTip="Отменить добавление пула" />
+                        ToolTip="Отменить изменение пула" />
                 </Grid>
             </Grid>
         </Grid>
