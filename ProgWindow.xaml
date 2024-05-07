@@ -181,7 +181,7 @@
                                             <DataGridTextColumn
                                                 x:Name="Версия_CLR"
                                                 Width="150"
-                                                Binding="{Binding CLR_Ver}"
+                                                Binding="{Binding NETCLRVersion}"
                                                 CanUserResize="False"
                                                 CanUserSort="False"
                                                 CellStyle="{StaticResource DataGridCellStyle1}"
@@ -191,7 +191,7 @@
                                             <DataGridTextColumn
                                                 x:Name="Режим_конвейера"
                                                 Width="*"
-                                                Binding="{Binding ControlState}"
+                                                Binding="{Binding ManagedPipelineMode}"
                                                 CanUserResize="False"
                                                 CanUserSort="False"
                                                 CellStyle="{StaticResource DataGridCellStyle1}"
@@ -246,6 +246,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button
                                             Grid.Column="0"
+                                            Click="btnAddPool_Click"
                                             Content="Добавить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Добавить пул">
@@ -327,7 +328,7 @@
                                             <DataGridTextColumn
                                                 x:Name="Привязки_сайта"
                                                 Width="*"
-                                                Binding="{Binding SiteBindings}"
+                                                Binding="{Binding Bindings}"
                                                 CanUserResize="False"
                                                 CanUserSort="False"
                                                 CellStyle="{StaticResource DataGridCellStyle1}"
@@ -357,6 +358,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button
                                             Grid.Column="0"
+                                            Click="btnStart_Click"
                                             Content="Запустить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Запустить сайт">
@@ -366,6 +368,7 @@
                                         </Button>
                                         <Button
                                             Grid.Column="1"
+                                            Click="btnStop_Click"
                                             Content="Остановить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Остановить сайт">
@@ -382,6 +385,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Button
                                             Grid.Column="0"
+                                            Click="btnAddSite_Click"
                                             Content="Добавить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Добавить сайт">
@@ -391,6 +395,7 @@
                                         </Button>
                                         <Button
                                             Grid.Column="1"
+                                            Click="btnEditSite_Click"
                                             Content="Изменить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Изменить сайт">
@@ -400,6 +405,7 @@
                                         </Button>
                                         <Button
                                             Grid.Column="2"
+                                            Click="btnDeleteSite_Click"
                                             Content="Удалить"
                                             Template="{StaticResource ProgButtonTemplate}"
                                             ToolTip="Удалить сайт">

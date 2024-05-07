@@ -57,7 +57,8 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontFamily" Value="{StaticResource Raleway}" />
             <Setter Property="Foreground" Value="#9F9797" />
-            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">

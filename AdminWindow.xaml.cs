@@ -74,7 +74,10 @@ namespace AdminTool_wpf
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                this.Effect = new BlurEffect { Radius = 10 };
+                CustomMessageBox cmb = new CustomMessageBox(ex.Message, CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
             }
         }
 
@@ -174,12 +177,14 @@ namespace AdminTool_wpf
                 CustomMessageBox cmb = new CustomMessageBox("Выберите только ОДНОГО пользователя для редактирования",
                     CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
                 cmb.ShowDialog();
+                this.Effect = null;
             }
             else
             {
                 CustomMessageBox cmb = new CustomMessageBox("Выберите пользователя для редактирования",
                     CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
                 cmb.ShowDialog();
+                this.Effect = null;
             }
         }
 

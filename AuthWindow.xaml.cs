@@ -1,9 +1,13 @@
 ﻿using AdminService;
 using System;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using static AdminTool_wpf.CustomMessageBox;
@@ -25,6 +29,15 @@ namespace AdminTool_wpf
             authWindow = this;
         }
 
+        private void tbPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = (PasswordBox)sender;
+            var watermarkLabel = (TextBlock)passwordBox.Template.FindName("WatermarkLabel", passwordBox);
+
+            watermarkLabel.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+
         private void InitializeServiceClient()
         {
             var binding = new NetTcpBinding();
@@ -38,32 +51,42 @@ namespace AdminTool_wpf
         private void Auth()
         {
             string login = tbLogin.Text;
-            string password = tbPass.Text;
+            string password = tbPass.Password;
 
-            User user = serviceClient.Authenticate(login, password);
-
-            if (user != null)
+            try
             {
-                if (user.Group == "Admin")
+                User user = serviceClient.Authenticate(login, password);
+
+                if (user != null)
                 {
-                    AdminWindow adminWin = new AdminWindow(serviceClient);
-                    adminWin.Tag = this;
-                    adminWin.Show();
-                    Hide();
+                    if (user.Group == "Admin")
+                    {
+                        AdminWindow adminWin = new AdminWindow(serviceClient);
+                        adminWin.Tag = this;
+                        adminWin.Show();
+                        Hide();
+                    }
+                    else if (user.Group == "Dev")
+                    {
+                        ProgWindow progWin = new ProgWindow(serviceClient, user.Login);
+                        progWin.Tag = this;
+                        progWin.Show();
+                        Hide();
+                    }
                 }
-                else if (user.Group == "Dev")
+                else
                 {
-                    ProgWindow progWin = new ProgWindow(serviceClient, user.Login);
-                    progWin.Tag = this;
-                    progWin.Show();
-                    Hide();
+                    var cmb = new CustomMessageBox("Неверные данные!", CustomMessageBox.MessageBoxButton.OK, MessageBoxType.Error);
+
+                    this.Effect = new BlurEffect { Radius = 10 };
+                    cmb.ShowDialog();
+                    this.Effect = null;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                var cmb = new CustomMessageBox("Неверные данные!",CustomMessageBox.MessageBoxButton.OK, MessageBoxType.Error);
-                
                 this.Effect = new BlurEffect { Radius = 10 };
+                CustomMessageBox cmb = new CustomMessageBox(ex.Message, CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
                 cmb.ShowDialog();
                 this.Effect = null;
             }
