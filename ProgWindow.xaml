@@ -14,6 +14,52 @@
     WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
+        <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="130" />
+            <Setter Property="Height" Value="39" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="{StaticResource Raleway}" />
+            <Setter Property="Foreground" Value="#9F9797" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border
+                            x:Name="border"
+                            Background="#262729"
+                            BorderThickness="0"
+                            CornerRadius="15">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Foreground="#9F9797" />
+                                <TextBlock
+                                    x:Name="PlaceholderTextBlock"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    IsHitTestVisible="False"
+                                    Text="{TemplateBinding Tag}"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#333435" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <ControlTemplate x:Key="ProgButtonTemplate" TargetType="Button">
             <Border
                 x:Name="border"
@@ -80,6 +126,124 @@
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#1D1E1F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Border
+                x:Name="Border"
+                Background="#262729"
+                BorderThickness="0"
+                CornerRadius="15">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="3"
+                        Direction="90"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Path
+                    x:Name="Arrow"
+                    Margin="0,0,3,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Data="M 0 0 L 4 4 L 8 0 Z"
+                    Fill="Black" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#595c5b" />
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#2f3030" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
+            <Border
+                x:Name="Border"
+                Background="Transparent"
+                BorderThickness="0"
+                CornerRadius="3">
+                <ScrollViewer x:Name="PART_ContentHost" />
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="RoundedComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="39" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontFamily" Value="{StaticResource Raleway}" />
+            <Setter Property="Foreground" Value="#9F9797" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border
+                            x:Name="border"
+                            Background="#262729"
+                            BorderThickness="0"
+                            CornerRadius="15">
+                            <Grid>
+                                <ToggleButton
+                                    x:Name="toggleButton"
+                                    Grid.Column="2"
+                                    ClickMode="Press"
+                                    Focusable="false"
+                                    IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Template="{StaticResource ComboBoxToggleButton}" />
+                                <ContentPresenter
+                                    x:Name="contentPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding SelectionBoxItem}"
+                                    ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                    ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+                                <Popup
+                                    x:Name="popup"
+                                    AllowsTransparency="True"
+                                    Focusable="False"
+                                    IsOpen="{TemplateBinding IsDropDownOpen}"
+                                    Placement="Bottom"
+                                    PopupAnimation="Slide">
+                                    <Grid
+                                        x:Name="dropDown"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border
+                                            x:Name="dropDownBorder"
+                                            Background="#262729"
+                                            BorderBrush="#262729"
+                                            BorderThickness="1"
+                                            CornerRadius="15">
+                                            <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="dropDownBorder" Property="MinHeight" Value="95" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD" />
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                            </Trigger>
+                            <Trigger SourceName="popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="dropDownBorder" Property="CornerRadius" Value="15" />
+                                <Setter TargetName="dropDownBorder" Property="Margin" Value="0,2,0,0" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -423,141 +587,140 @@
                         </Border>
                     </TabItem.Content>
                 </TabItem>
-                <!-->
+                <!-- ДЛЯ БУДУЩЕЙ РЕАЛИЗАЦИИ
                 <TabItem
-                    FontSize="20"
-                    Foreground="White"
-                    Header="Конфигурация сервера">
-                    <TabItem.Content>
-                        <Border Background="#1D1E1F" CornerRadius="0 10 10 10">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="300" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <DockPanel Margin="10" LastChildFill="True">
-                                    <DataGrid
-                                        x:Name="dgv123"
-                                        Grid.Row="0"
-                                        Height="250"
-                                        AutoGenerateColumns="False"
-                                        ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}"
-                                        DockPanel.Dock="Top"
-                                        ItemsSource="{Binding}"
-                                        PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
-                                        RowStyle="{StaticResource DataGridRowStyle1}"
-                                        Style="{StaticResource DataGridStyle1}">
-                                        <DataGrid.Resources>
-                                            <Style BasedOn="{StaticResource VerticalScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
-                                        </DataGrid.Resources>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn
-                                                Width="*"
-                                                Binding="{Binding Name}"
-                                                CanUserResize="False"
-                                                CanUserSort="False"
-                                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                                Header="Название сайта"
-                                                IsReadOnly="True" />
+    FontSize="20"
+    Foreground="White"
+    Header="Конфигурация сервера">
+    <TabItem.Content>
+        <Border Background="#1D1E1F" CornerRadius="0 10 10 10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="80" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource Raleway}"
+                            FontSize="28"
+                            Foreground="White"
+                            Text="Настройки сжатия" />
+                        <CheckBox
+                            x:Name="cbEnableStaticCompression"
+                            Grid.Row="1"
+                            Margin="10,10,10,10"
+                            HorizontalAlignment="Center"
+                            Content="Сжатие статического контента"
+                            FontFamily="{StaticResource Raleway}"
+                            FontSize="16"
+                            Foreground="LightGray" />
+                        <CheckBox
+                            x:Name="cbEnableDynamicCompression"
+                            Grid.Row="2"
+                            Margin="25,10,10,10"
+                            HorizontalAlignment="Center"
+                            Content="Сжатие динамического контента"
+                            FontFamily="{StaticResource Raleway}"
+                            FontSize="16"
+                            Foreground="LightGray" />
+                        <Button
+                            Grid.Row="4"
+                            Margin="0,30,0,0"
+                            HorizontalAlignment="Center"
+                            Click="SaveCompressionSettings"
+                            Content="Сохранить"
+                            Template="{StaticResource ProgButtonTemplate}"
+                            ToolTip="Сохранить настройки сжатия">
+                            <Button.Tag>
+                                <BitmapImage UriSource="/Resources/images/save.png" />
+                            </Button.Tag>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="55" />
+                            <RowDefinition Height="55" />
+                            <RowDefinition Height="60" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource Raleway}"
+                            FontSize="28"
+                            Foreground="White"
+                            Text="Настройки логирования" />
+                        <CheckBox
+                            x:Name="cbEnableLogging"
+                            Grid.Row="1"
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Content="Включить логирование"
+                            FontFamily="{StaticResource Raleway}"
+                            FontSize="16"
+                            Foreground="LightGray" />
+                        <TextBox
+                            x:Name="tbLogFilePath"
+                            Grid.Row="2"
+                            Width="300"
+                            Margin="5"
+                            Style="{StaticResource RoundedTextBoxStyle}"
+                            Tag="Путь к файлу логов"
+                            ToolTip="Введите путь к файлу логов" />
+                        <Button
+                            Name="btnOpenFile"
+                            Grid.Row="2"
+                            Width="30"
+                            Height="30"
+                            Margin="0,0,50,0"
+                            HorizontalAlignment="Right"
+                            Background="#9F9797"
+                            Click="ChooseDirectory"
+                            Content="..." />
+                        <ComboBox
+                            x:Name="cbLogFormat"
+                            Grid.Row="3"
+                            Width="300"
+                            Margin="5"
+                            Style="{StaticResource RoundedComboBoxStyle}">
+                            <ComboBoxItem Content="W3C" />
+                            <ComboBoxItem Content="IIS" />
+                            <ComboBoxItem Content="NCSA" />
+                        </ComboBox>
+                        <Button
+                            Grid.Row="4"
+                            HorizontalAlignment="Center"
+                            Click="SaveLogSettings"
+                            Content="Сохранить"
+                            Template="{StaticResource ProgButtonTemplate}"
+                            ToolTip="Сохранить настройки логирования">
+                            <Button.Tag>
+                                <BitmapImage UriSource="/Resources/images/save.png" />
+                            </Button.Tag>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </TabItem.Content>
+</TabItem>
+                -->
 
-                                            <DataGridTextColumn
-                                                Width="*"
-                                                Binding="{Binding State}"
-                                                CanUserResize="False"
-                                                CanUserSort="False"
-                                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                                Header="Состояние сайта"
-                                                IsReadOnly="True" />
-
-                                            <DataGridTextColumn
-                                                Width="*"
-                                                Binding="{Binding SiteBindings}"
-                                                CanUserResize="False"
-                                                CanUserSort="False"
-                                                CellStyle="{StaticResource DataGridCellStyle1}"
-                                                Header="Привязки сайта"
-                                                IsReadOnly="True" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Grid
-                                        Width="755"
-                                        Height="20"
-                                        Margin="7,2,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Background="Transparent">
-                                        <Border Background="#23262b" CornerRadius="0 0 20 20" />
-                                    </Grid>
-                                </DockPanel>
-                                <Grid Grid.Row="1" Margin="10,0,80,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="290" />
-                                        <ColumnDefinition Width="390" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Margin="0,0,25,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Button
-                                            Grid.Column="0"
-                                            Content="Запустить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Запустить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/start.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="1"
-                                            Content="Остановить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Остановить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/stop.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Button
-                                            Grid.Column="0"
-                                            Content="Добавить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Добавить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/add.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="1"
-                                            Content="Изменить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Изменить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/edit.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="2"
-                                            Content="Удалить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Удалить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/delete.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </TabItem.Content>
-                </TabItem>
-                <-->
             </TabControl>
             <Button
                 Grid.Row="1"

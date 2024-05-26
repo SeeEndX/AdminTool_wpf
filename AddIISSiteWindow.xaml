@@ -154,7 +154,7 @@
                             Height="20"
                             Margin="0,0,75,0"
                             HorizontalAlignment="Right"
-                            Background="#b6b6cc"
+                            Background="#9F9797"
                             Click="ChooseDirectory"
                             Content="..." />
                     </Grid>

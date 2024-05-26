@@ -1,6 +1,8 @@
 ﻿using AdminService;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Policy;
@@ -299,6 +301,11 @@ namespace AdminTool_wpf
             
         }
 
+        private void btn_SaveSettings(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (dgvSites.SelectedItems.Count > 0)
@@ -521,5 +528,70 @@ namespace AdminTool_wpf
                 this.Effect = null;
             }
         }
+
+        //ДЛЯ БУДУЩЕЙ РЕАЛИЗАЦИИ
+        /*
+        private void ChooseDirectory(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\";
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                tbLogFilePath.Text = dialog.FileName;
+            }
+        }
+
+        private void SaveCompressionSettings(object sender, RoutedEventArgs e)
+        {
+            bool enableStaticCompression = cbEnableStaticCompression.IsChecked ?? false;
+            bool enableDynamicCompression = cbEnableDynamicCompression.IsChecked ?? false;
+
+            try
+            {
+                serviceClient.ConfigureCompression(enableStaticCompression, enableDynamicCompression);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
+            BlurEffect();
+            CustomMessageBox cmb = new CustomMessageBox("Настройки сжатия сохранены",
+        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
+            cmb.ShowDialog();
+            this.Effect = null;
+        }
+
+        private void SaveLogSettings(object sender, RoutedEventArgs e)
+        {
+            string logFilePath = tbLogFilePath.Text;
+            string logFormat = (cbLogFormat.SelectedItem as ComboBoxItem)?.Content.ToString();
+            bool enableLogging = cbEnableLogging.IsChecked ?? false;
+
+            if (string.IsNullOrEmpty(logFilePath) || string.IsNullOrEmpty(logFormat))
+            {
+                BlurEffect();
+                CustomMessageBox cmb1 = new CustomMessageBox("Пожалуйста, укажите путь к файлу логов и формат логов",
+            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
+                cmb1.ShowDialog();
+                this.Effect = null;
+                return;
+            }
+            try
+            {
+                serviceClient.ConfigureLog(logFilePath, logFormat, enableLogging);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            BlurEffect();
+            CustomMessageBox cmb = new CustomMessageBox("Настройки логирования сохранены",
+        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
+            cmb.ShowDialog();
+            this.Effect = null;
+        }*/
     }
 }
