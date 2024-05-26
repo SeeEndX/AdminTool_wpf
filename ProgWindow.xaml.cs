@@ -345,8 +345,14 @@ namespace AdminTool_wpf
 
             AddIISPoolWindow addIISWebSite = new AddIISPoolWindow(serviceClient);
             addIISWebSite.Owner = this;
-            addIISWebSite.Closed += AddSiteWin_FormClosed;
+            addIISWebSite.Closed += AddPoolWin_FormClosed;
             addIISWebSite.ShowDialog();
+        }
+
+        private void AddPoolWin_FormClosed(object sender, EventArgs e)
+        {
+            this.Effect = null;
+            UpdatePoolsDG();
         }
 
         private void btnEditPool_Click(object sender, EventArgs e)
@@ -408,7 +414,7 @@ namespace AdminTool_wpf
                 UpdatePoolsDG();
 
             }
-            else if (dgvSites.SelectedItems.Count > 1)
+            else if (dgvPools.SelectedItems.Count > 1)
             {
                 CustomMessageBox cmb = new CustomMessageBox("Вы уверены, что хотите удалить пулы?",
                     CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);

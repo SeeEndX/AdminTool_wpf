@@ -37,6 +37,7 @@ namespace AdminTool_wpf
             InitializeComponent();
             editPool = this;
             currentPoolName = currentName;
+            tbPoolName.Text = currentPoolName;
             cbMode.SelectedItem = ManagedPipelineMode.Classic;
         }
 
@@ -49,7 +50,7 @@ namespace AdminTool_wpf
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (tbPoolName.Text == "")
+            /*if (tbPoolName.Text == "")
             {
                 BlurEffect();
                 CustomMessageBox cmb = new CustomMessageBox("Введите название пула!",
@@ -82,6 +83,45 @@ namespace AdminTool_wpf
                 BlurEffect();
                 CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
             CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }*/
+
+            if (string.IsNullOrEmpty(tbPoolName.Text))
+            {
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox("Введите название пула!",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+            else if (string.IsNullOrEmpty(tbMemLimit.Text) || string.IsNullOrEmpty(tbRestart.Text))
+            {
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox("Заполните все поля!",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
+                cmb.ShowDialog();
+                this.Effect = null;
+            }
+            else
+            {
+                var memoryLimit = int.Parse(tbMemLimit.Text);
+                var intervalMinutes = int.Parse(tbRestart.Text) == 0 ? 30 : int.Parse(tbRestart.Text);
+                var mode = cbMode.Text == "Классический" ? ManagedPipelineMode.Classic : ManagedPipelineMode.Integrated;
+
+                if (tbPoolName.Text == currentPoolName)
+                {
+                    serviceClient.ModifyPool(currentPoolName, currentPoolName, mode, memoryLimit, intervalMinutes);
+                }
+                else
+                {
+                    var poolName = tbPoolName.Text;
+                    serviceClient.ModifyPool(currentPoolName, poolName, mode, memoryLimit, intervalMinutes);
+                }
+
+                BlurEffect();
+                CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
+                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
                 cmb.ShowDialog();
                 this.Effect = null;
             }
