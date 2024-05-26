@@ -50,43 +50,6 @@ namespace AdminTool_wpf
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            /*if (tbPoolName.Text == "")
-            {
-                BlurEffect();
-                CustomMessageBox cmb = new CustomMessageBox("Введите название пула!",
-                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-            else if (tbPoolName.Text == currentPoolName)
-            {
-                var memoryLimit = string.IsNullOrEmpty(tbMemLimit.Text) ? 0 : int.Parse(tbMemLimit.Text);
-                var intervalMinutes = (int.Parse(tbRestart.Text) == 0) ? 30 : int.Parse(tbRestart.Text);
-                mode = (cbMode.Text == "Классический") ? ManagedPipelineMode.Classic : ManagedPipelineMode.Integrated;
-
-                serviceClient.ModifyPool(currentPoolName, currentPoolName, mode, memoryLimit, intervalMinutes);
-                BlurEffect();
-                CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
-            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-            else
-            {
-                var poolName = tbPoolName.Text;
-
-                var memoryLimit = string.IsNullOrEmpty(tbMemLimit.Text) ? 0 : int.Parse(tbMemLimit.Text);
-                var intervalMinutes = (int.Parse(tbRestart.Text) == 0) ? 30 : int.Parse(tbRestart.Text);
-                mode = (cbMode.Text == "Классический") ? ManagedPipelineMode.Classic : ManagedPipelineMode.Integrated;
-
-                serviceClient.ModifyPool(currentPoolName ,poolName, mode, memoryLimit, intervalMinutes);
-                BlurEffect();
-                CustomMessageBox cmb = new CustomMessageBox("Пул был изменен!",
-            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }*/
-
             if (string.IsNullOrEmpty(tbPoolName.Text))
             {
                 BlurEffect();
