@@ -25,6 +25,7 @@ namespace AdminTool_wpf
     /// <summary>
     /// Логика взаимодействия для AddIISSiteWindow.xaml
     /// </summary>
+    /// класс окна добавления сайта IIS
     public partial class AddIISSiteWindow : Window
     {
         AddIISSiteWindow addSite;
@@ -37,6 +38,7 @@ namespace AdminTool_wpf
             addSite = this;
         }
 
+        //метод по нажатию выбрать папку
         private void ChooseDirectory(object sender, RoutedEventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
@@ -48,6 +50,7 @@ namespace AdminTool_wpf
             }
         }
 
+        //метод, вызываемый при изменении пути к папке
         private void tbPath_TextChanged(object sender, TextChangedEventArgs e)
         {
             string path = tbPath.Text;
@@ -63,6 +66,7 @@ namespace AdminTool_wpf
             }
         }
 
+        //метод по размытию заднего фона
         private void BlurEffect()
         {
             BlurEffect blurEffect = new BlurEffect();
@@ -70,6 +74,7 @@ namespace AdminTool_wpf
             this.Effect = blurEffect;
         }
 
+        //метод по нажатию кнопки добавить
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (tbSiteName.Text == "" || tbPath.Text == "" || tbPort.Text == "")
@@ -95,6 +100,7 @@ namespace AdminTool_wpf
             }
         }
 
+        //метод по нажатию кнопки закрыть
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.1));
@@ -102,16 +108,19 @@ namespace AdminTool_wpf
             this.BeginAnimation(OpacityProperty, anim);
         }
 
+        //метод по перемещению окна
         private void Drag(object sender, RoutedEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed) addSite.DragMove();
         }
 
+        //метод по нажатию кнопки назад
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //метод, вызываемый при изменении текста в поле ввода порта
         private void PortInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             int port;
@@ -126,6 +135,7 @@ namespace AdminTool_wpf
             }
         }
 
+        //метод, вызываемый до изменения текста в поле ввода порта
         private void PortInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1))
