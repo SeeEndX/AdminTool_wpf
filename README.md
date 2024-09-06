@@ -4,11 +4,17 @@
 2) Создать подключение в MySQL Server
 
 3) Выполнить команды в CMD:
-> MySQL -u ПОЛЬЗОВАТЕЛЬ_ПОДКЛЮЧЕНИЯ -pПАРОЛЬ -e "CREATE DATABASE admintooldb"
-> mysql -u ПОЛЬЗОВАТЕЛЬ_ПОДКЛЮЧЕНИЯ -pПАРОЛЬ admintooldb < "Путь\до\файла\DumpDB.sql"
+```
+MySQL -u ПОЛЬЗОВАТЕЛЬ_ПОДКЛЮЧЕНИЯ -pПАРОЛЬ -e "CREATE DATABASE admintooldb"
+```
+```
+mysql -u ПОЛЬЗОВАТЕЛЬ_ПОДКЛЮЧЕНИЯ -pПАРОЛЬ admintooldb < "Путь\до\файла\DumpDB.sql"
+```
 
 4) Запустить скрипт CMD:
-> .\путь\до\addAdmin.bat ЛОГИН_АДМИНА ПАРОЛЬ_АДМИНА
+```
+.\путь\до\addAdmin.bat ЛОГИН_АДМИНА ПАРОЛЬ_АДМИНА
+```
 
 5) Запустить установщик AdminTool.msi и установить приложения.
 
