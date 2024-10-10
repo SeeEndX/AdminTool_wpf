@@ -375,11 +375,11 @@
                                 </DockPanel>
                                 <Grid Grid.Row="1" Margin="10,0,80,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="290" />
-                                        <ColumnDefinition Width="390" />
+                                        <ColumnDefinition Width="490" />
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" Margin="0,0,25,0">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
                                             <ColumnDefinition />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
@@ -403,39 +403,12 @@
                                                 <BitmapImage UriSource="/Resources/images/stop.png" />
                                             </Button.Tag>
                                         </Button>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Button
-                                            Grid.Column="0"
-                                            Click="btnAddPool_Click"
-                                            Content="Добавить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Добавить пул">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/add.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="1"
-                                            Click="btnEditPool_Click"
-                                            Content="Изменить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Изменить пул">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/edit.png" />
-                                            </Button.Tag>
-                                        </Button>
                                         <Button
                                             Grid.Column="2"
-                                            Click="btnDeletePool_Click"
-                                            Content="Удалить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Удалить пул">
+    Click="btnDeletePool_Click"
+    Content="Удалить"
+    Template="{StaticResource ProgButtonTemplate}"
+    ToolTip="Удалить пул">
                                             <Button.Tag>
                                                 <BitmapImage UriSource="/Resources/images/delete.png" />
                                             </Button.Tag>
@@ -516,11 +489,11 @@
                                 </DockPanel>
                                 <Grid Grid.Row="1" Margin="10,0,80,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="290" />
-                                        <ColumnDefinition Width="390" />
+                                        <ColumnDefinition Width="490" />
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" Margin="0,0,25,0">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
                                             <ColumnDefinition />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
@@ -544,39 +517,12 @@
                                                 <BitmapImage UriSource="/Resources/images/stop.png" />
                                             </Button.Tag>
                                         </Button>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
                                         <Button
-                                            Grid.Column="0"
-                                            Click="btnAddSite_Click"
-                                            Content="Добавить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Добавить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/add.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="1"
-                                            Click="btnEditSite_Click"
-                                            Content="Изменить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Изменить сайт">
-                                            <Button.Tag>
-                                                <BitmapImage UriSource="/Resources/images/edit.png" />
-                                            </Button.Tag>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="2"
-                                            Click="btnDeleteSite_Click"
-                                            Content="Удалить"
-                                            Template="{StaticResource ProgButtonTemplate}"
-                                            ToolTip="Удалить сайт">
+    Grid.Column="2"
+    Click="btnDeleteSite_Click"
+    Content="Удалить"
+    Template="{StaticResource ProgButtonTemplate}"
+    ToolTip="Удалить сайт">
                                             <Button.Tag>
                                                 <BitmapImage UriSource="/Resources/images/delete.png" />
                                             </Button.Tag>

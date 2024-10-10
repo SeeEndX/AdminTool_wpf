@@ -290,20 +290,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddIISPoolWindow.xaml.cs">
-      <DependentUpon>AddIISPoolWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddIISSiteWindow.xaml.cs">
-      <DependentUpon>AddIISSiteWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddUserWindow.xaml.cs">
       <DependentUpon>AddUserWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EditIISPoolWindow.xaml.cs">
-      <DependentUpon>EditIISPoolWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EditSiteWindow.xaml.cs">
-      <DependentUpon>EditSiteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditUserWindow.xaml.cs">
       <DependentUpon>EditUserWindow.xaml</DependentUpon>
@@ -314,14 +302,6 @@
     <Compile Include="ViewReportWindow.xaml.cs">
       <DependentUpon>ViewReportWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddIISPoolWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AddIISSiteWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AddUserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -346,14 +326,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="CustomMessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditIISPoolWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditSiteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -129,67 +129,12 @@ namespace AdminTool_wpf
         }
 
         //логика с IIS 
-        private void btnAddSite_Click(object sender, EventArgs e)
-        {
-            ShowAddingIISWebSite();
-        }
-
         private void BlurEffect()
         {
             BlurEffect blurEffect = new BlurEffect();
             blurEffect.Radius = 10;
             this.Effect = blurEffect;
         }
-
-        private void ShowAddingIISWebSite()
-        {
-            BlurEffect();
-
-            AddIISSiteWindow addIISWebSite = new AddIISSiteWindow(serviceClient);
-            addIISWebSite.Owner = this;
-            addIISWebSite.Closed += AddSiteWin_FormClosed;
-            addIISWebSite.ShowDialog();
-        }
-
-        private void AddSiteWin_FormClosed(object sender, EventArgs e)
-        {
-            this.Effect = null;
-            UpdateSitesDG();
-        }
-
-        private void EditSiteWin_FormClosed(object sender, EventArgs e)
-        {
-            this.Effect = null;
-            UpdateSitesDG();
-        }
-
-        private void btnEditSite_Click(object sender, EventArgs e)
-        {
-            if (dgvSites.SelectedItems.Count == 1)
-            {
-                BlurEffect();
-                var site = (IISManager.SiteInfo)dgvSites.SelectedItem;
-                EditSiteWindow editSiteWin = new EditSiteWindow(serviceClient, site.Name);
-                editSiteWin.Owner = this;
-                editSiteWin.Closed += EditSiteWin_FormClosed;
-                editSiteWin.ShowDialog();
-            }
-            else if (dgvSites.SelectedItems.Count > 1)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Выберите только ОДИН сайт для редактирования",
-                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-            else
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Выберите сайт для редактирования",
-                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-        }
-
 
         private void btnDeleteSite_Click(object sender, EventArgs e)
         {
@@ -288,11 +233,6 @@ namespace AdminTool_wpf
             
         }
 
-        private void btn_SaveSettings(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (dgvSites.SelectedItems.Count > 0)
@@ -326,65 +266,6 @@ namespace AdminTool_wpf
                 cmb.ShowDialog();
                 this.Effect = null;
             }
-        }
-
-        private void btnAddPool_Click(object sender, EventArgs e)
-        {
-            ShowAddingIISPool();
-        }
-
-        private void ShowAddingIISPool()
-        {
-            BlurEffect();
-
-            AddIISPoolWindow addIISWebSite = new AddIISPoolWindow(serviceClient);
-            addIISWebSite.Owner = this;
-            addIISWebSite.Closed += AddPoolWin_FormClosed;
-            addIISWebSite.ShowDialog();
-        }
-
-        private void AddPoolWin_FormClosed(object sender, EventArgs e)
-        {
-            this.Effect = null;
-            UpdatePoolsDG();
-        }
-
-        private void btnEditPool_Click(object sender, EventArgs e)
-        {
-            ShowEditingIISPool();
-        }
-
-        private void ShowEditingIISPool()
-        {
-            if (dgvPools.SelectedItems.Count == 1)
-            {
-                BlurEffect();
-                var pool = (IISManager.AppPoolInfo)dgvPools.SelectedItem;
-                EditIISPoolWindow editPoolWin = new EditIISPoolWindow(serviceClient, pool.Name);
-                editPoolWin.Owner = this;
-                editPoolWin.Closed += EditPoolWin_FormClosed;
-                editPoolWin.ShowDialog();
-            }
-            else if (dgvSites.SelectedItems.Count > 1)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Выберите только ОДИН пул для редактирования",
-                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-            else
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Выберите пул для редактирования",
-                    CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Error);
-                cmb.ShowDialog();
-                this.Effect = null;
-            }
-        }
-
-        private void EditPoolWin_FormClosed(object sender, EventArgs e)
-        {
-            this.Effect = null;
-            UpdatePoolsDG();
         }
 
         private void btnDeletePool_Click(object sender, EventArgs e)
@@ -515,70 +396,5 @@ namespace AdminTool_wpf
                 this.Effect = null;
             }
         }
-
-        //ДЛЯ БУДУЩЕЙ РЕАЛИЗАЦИИ
-        /*
-        private void ChooseDirectory(object sender, RoutedEventArgs e)
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\";
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                tbLogFilePath.Text = dialog.FileName;
-            }
-        }
-
-        private void SaveCompressionSettings(object sender, RoutedEventArgs e)
-        {
-            bool enableStaticCompression = cbEnableStaticCompression.IsChecked ?? false;
-            bool enableDynamicCompression = cbEnableDynamicCompression.IsChecked ?? false;
-
-            try
-            {
-                serviceClient.ConfigureCompression(enableStaticCompression, enableDynamicCompression);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-            BlurEffect();
-            CustomMessageBox cmb = new CustomMessageBox("Настройки сжатия сохранены",
-        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
-            cmb.ShowDialog();
-            this.Effect = null;
-        }
-
-        private void SaveLogSettings(object sender, RoutedEventArgs e)
-        {
-            string logFilePath = tbLogFilePath.Text;
-            string logFormat = (cbLogFormat.SelectedItem as ComboBoxItem)?.Content.ToString();
-            bool enableLogging = cbEnableLogging.IsChecked ?? false;
-
-            if (string.IsNullOrEmpty(logFilePath) || string.IsNullOrEmpty(logFormat))
-            {
-                BlurEffect();
-                CustomMessageBox cmb1 = new CustomMessageBox("Пожалуйста, укажите путь к файлу логов и формат логов",
-            CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Warning);
-                cmb1.ShowDialog();
-                this.Effect = null;
-                return;
-            }
-            try
-            {
-                serviceClient.ConfigureLog(logFilePath, logFormat, enableLogging);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-            BlurEffect();
-            CustomMessageBox cmb = new CustomMessageBox("Настройки логирования сохранены",
-        CustomMessageBox.MessageBoxButton.OK, CustomMessageBox.MessageBoxType.Success);
-            cmb.ShowDialog();
-            this.Effect = null;
-        }*/
     }
 }
